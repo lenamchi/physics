@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Physics Lesson Packages</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Unbounded:wght@500;700&display=swap">
+<style>
+:root{
+  --bg:#f3f5f8; --surface:#ffffff; --sunk:#e9edf2; --ink:#0f1b2c; --muted:#566377; --line:#d6dde6;
+  --accent:#0a6a8f; --ok:#17773f;
+  --f-display:"Unbounded","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0b121b; --surface:#121c28; --sunk:#0e1721; --ink:#e5ecf4; --muted:#93a2b5; --line:#243246; --accent:#5ec4ea; --ok:#55c98d; color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0b121b; --surface:#121c28; --sunk:#0e1721; --ink:#e5ecf4; --muted:#93a2b5; --line:#243246; --accent:#5ec4ea; --ok:#55c98d; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.55}
+.wrap{max-width:1040px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-left,0px)) 48px max(16px,env(safe-area-inset-right,0px))}
+header{padding:40px 0 20px}
+.kicker{font-size:.75rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:700}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(1.9rem,6vw,3rem);line-height:1.15;margin:10px 0 0;letter-spacing:-.01em;text-wrap:balance}
+.lede{color:var(--muted);max-width:60ch;margin:12px 0 0}
+.tips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.tip{font-size:.85rem;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:22px}
+.ch{--c:#0a6a8f;display:grid;gap:8px;align-content:start;background:var(--surface);border:1px solid var(--line);border-top:5px solid var(--c);border-radius:12px;padding:16px 18px;text-decoration:none;color:inherit;min-width:0}
+a.ch:hover,a.ch:focus-visible{border-color:var(--c);box-shadow:0 0 0 2px var(--c) inset;outline:none}
+.ch .num{font-family:var(--f-display);font-weight:700;font-size:.85rem;color:var(--c)}
+.ch h2{font-family:var(--f-display);font-weight:500;font-size:1.2rem;line-height:1.25;margin:0}
+.ch p{margin:0;color:var(--muted);font-size:.95rem}
+.ch .go{margin-top:4px;font-weight:700;color:var(--c)}
+.ch.soon{opacity:.6;border-top-color:var(--line)}
+.ch.soon .num,.ch.soon .go{color:var(--muted)}
+footer{margin-top:36px;color:var(--muted);font-size:.85rem}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header>
+  <div class="kicker">Secondary Pure Physics</div>
+  <h1>Physics Lesson Packages</h1>
+  <p class="lede">Pick a chapter to start. Each lesson has notes, an interactive explorer, past-year questions with instant feedback, and a form to submit your answers to your teacher.</p>
+  <div class="tips"><span class="tip">💾 Use <strong>Save / Resume</strong> in a lesson to continue on another device</span><span class="tip">📤 Submit your answers at the end of each chapter</span></div>
+</header>
+<section class="grid" id="grid" aria-label="Chapters"></section>
+<footer>Questions from past-year O-Level papers; paper codes are shown with each question.</footer>
+</main>
+<script>
+/* ===== CHAPTER LIST: add or edit chapters here =====
+   file:   the chapter's file name in GitHub (e.g. 'em-waves.html')
+   live:   true = students can open it; false = shows "Coming soon"
+   colour: card accent colour                                                      */
+const CHAPTERS = [
+  { num: 'Chapter 13', title: 'Electromagnetic Waves', file: 'em-waves.html', live: true, colour: '#6d28d9',
+    blurb: 'The EM spectrum, uses of each region, and the effects of absorbing EM waves.' }
+];
+/* ===================================================== */
+const grid=document.getElementById('grid');
+CHAPTERS.forEach(ch=>{
+  const el=document.createElement(ch.live?'a':'div');
+  el.className='ch'+(ch.live?'':' soon');
+  if(ch.live) el.href=ch.file;
+  el.style.setProperty('--c',ch.colour||'#0a6a8f');
+  el.innerHTML='<span class="num"></span><h2></h2><p></p><span class="go"></span>';
+  el.querySelector('.num').textContent=ch.num;
+  el.querySelector('h2').textContent=ch.title;
+  el.querySelector('p').textContent=ch.blurb||'';
+  el.querySelector('.go').textContent=ch.live?'Open lesson →':'Coming soon';
+  grid.appendChild(el);
+});
+</script>
+</body>
+</html>
